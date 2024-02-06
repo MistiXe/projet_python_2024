@@ -1,1 +1,3 @@
-from Vue import*
+from Vue import *
+
+print("Slt")
