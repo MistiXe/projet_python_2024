@@ -5,9 +5,8 @@ from tkinter import *
 
 old=[None, None]
 
-
 def créerGrille(root):
-    c = Canvas(root, width = 620, height= 620)
+    c = Canvas(root, width = 920, height= 720)
     x = 5
     y = 5
     for i in range(12):
@@ -19,46 +18,47 @@ def créerGrille(root):
     c.pack(anchor=CENTER, expand=False)
 
 
-def generateZoneJ1(root):
-    c = Canvas(root, width = 280,height = 610, background='ivory')
-    c.place(y=50)
-    c.create_text(50,40, font=40,text = "Joueur A", anchor=CENTER, fill='black')
-    générerPion(c)
+    générerPion(c,2,1)
     
    
 
 
-def generateZoneJ2(root):
-    c = Canvas(root, width = 280,height = 610, background='green')
-    c.create_text(50,40, font=40,text = "Joueur B", anchor=CENTER, fill='white')  
-    c.place(x = 930,y=50)
+
    
    
 
 
-def générerPion(cnv_pion):
-       
-     a = cnv_pion.create_rectangle(25,100,100,175, outline= 'white', width=4, fill='black', tags="pion")
+def générerPion(cnv_pion, tailleX, tailleY):
+   
+             
+     a = cnv_pion.create_rectangle(815.5,353,860,397, outline= 'black', width=2, fill='red', tags="pion")
+     
      cnv_pion.tag_bind("pion", "<Button-1>", cliquePion)
-     
+     cnv_pion.tag_bind("pion", "<B1-Motion>", lambda event:move(event, can=cnv_pion, rect=a))
 
-  
-     
-    
-     
-     
-    
-     
-     
-     
-     
 
 def cliquePion(event):
     old[0] = event.x
     old[1] = event.y
     print(event.x)
+
+def move(event, can, rect):
+    can.move(rect, event.x-old[0], event.y-old[1])
+    old[0] = event.x
+    old[1] = event.y
+
+
+
+
+
+
+       
+
+
     
-
-
-
     
+   
+    
+    
+   
+
