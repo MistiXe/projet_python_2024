@@ -12,7 +12,7 @@ def créerGrille(root):
     for i in range(13):
         c.create_line(12,12+50*i,612,12+50*i)
         c.create_line(12+50*i,12,12+50*i,612)
-    c.pack()
+    c.pack() 
     
     générerPion(c,2,1)
     
