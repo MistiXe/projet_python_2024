@@ -3,7 +3,7 @@ from tkinter import *
 
 
 root =  Tk()
-root.geometry("1210x610")
+root.geometry("1210x680")
 créerGrille(root)
 
 
