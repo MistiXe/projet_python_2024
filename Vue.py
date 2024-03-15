@@ -1,10 +1,10 @@
 from Controller import *
 from tkinter import *
+from Variables import *
 
 global liste_a_bouge
 
-global a
-liste_a_bouge =[]
+global laliste
 old=[None, None]
 global c 
 c= 0
@@ -21,41 +21,29 @@ def créerGrille(root):
             carré = platforme.create_rectangle(x,y,x+30,y+30)
 
     platforme.pack()
-    genererPionAuto(platforme)
+    laliste = genererPion(platforme)
+    
+    for i in range(len(laliste)):
+        for j in range(len(laliste)):
+            platforme.bind("<Button-1>", lambda event:cliquePion(event, platforme, laliste[i][j]))
     
     
-
-   
-    
-    
-  
-  
-   
-
-
-
-def genererPionAuto(platforme):
-    y = 50
-    x= 50
-    a = platforme.create_rectangle(50,50,80,80,fill="red") 
-    platforme.bind("<Button-1>",lambda event:cliquePion(event, platforme, a))
-    
-     
-
-
 def cliquePion(event, cnv, recta):
     global c
     c = (c+1)%2
     if(c == 1):
         old[0] = event.x
         old[1] = event.y
-        cnv.bind("<Motion>", lambda event:move(event, can=cnv, rect=recta))
+        cnv.bind("<Motion>", lambda event:move(event, cnv, recta))
     else:
         cnv.unbind("<Motion>")
-        deposer(event.x, event.y, can=cnv, rect=recta)
+        
     
     
 def move(event, can, rect):
+   
+    old[0] = event.x
+    old[1] = event.y
     x1, y1 , x2, y2 = can.coords(rect)
     move = False
     if (old[0] >= x1 and old[0] <= x2 and old[1] >= y1 and old[1] <= y2):
@@ -85,24 +73,6 @@ def deposer(x, y , can , rect):
     
     
   
-        
-
-
-def deposer(plateforme,a, event):
-    x1, y1 = plateforme.coords(a)
-   
-    move = False
-    for i in range(12):
-        for j in range(12):
-            if (12+i*50 <= event.x <= 12+(i+1)*50 and 12+j*50 <= event.y <= 12+(j+1)*50):
-                plateforme.move(a,12+i*50-x1,12+j*50-y1)
-                move = True 
-                
-               
-                           
-    if (move == False):
-        plateforme.move(a,620-x1,30-y1)
-        plateforme.unbind("<Motion>")
         
 
 
