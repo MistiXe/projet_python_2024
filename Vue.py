@@ -2,7 +2,7 @@ from Controller import *
 from tkinter import *
 from Variables import *
 
-global liste_a_bouge
+
 old=[None, None]
 global c 
 c= 0
@@ -55,13 +55,22 @@ def move(event, can, rect):
 
 def deposer(x,y,can , rect):
     x1, y1, x2, y2= can.coords(rect)
+    coord_last = can.coords(rect)
+    move = False
 
 
     for i in range(12):
         for j in range(12):
             if (400 +30*i  <= x<= 400+(i+1)*30 and 160 +30*j <= y <= 160+(j+1)*30):
                 can.move(rect,400+i*30-x1,160+j*30-y1)
-                can.unbind("<Button-1>")
+                move = True
+            
+    
+
+
+           
+
+                
                 
     
     
