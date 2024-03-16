@@ -9,8 +9,11 @@ c= 0
 
 
 
+
 def creerJeu(root):
     global laliste
+    global liste_bouge
+    liste_bouge = []
     platforme = Canvas(root, width=1200 , height=650)
 
     for i in range(12):
@@ -21,9 +24,8 @@ def creerJeu(root):
 
     platforme.pack()
     laliste = genererPion(platforme)
-   
+    genererGrille(12)
     
-    platforme.place()
     platforme.bind("<Button-1>", lambda event:cliquePion(event, platforme, laliste))
     
     
@@ -36,7 +38,8 @@ def cliquePion(event, cnv, laliste):
             cood_p = cnv.coords(p)
             if(cood_p[0] <= event.x <= cood_p[0] + cood_p[2] and cood_p[1] <= event.y <= cood_p[1] + cood_p[3]):
                 recta = p
-    if(recta != 0):  
+            
+    if(recta != 0 and recta not in liste_bouge):  
         if(c == 1):
             old[0] = event.x
             old[1] = event.y
@@ -44,6 +47,7 @@ def cliquePion(event, cnv, laliste):
         else:
             cnv.unbind("<Motion>")
             deposer(event.x,event.y,cnv, recta)
+    
         
     
     
@@ -54,6 +58,7 @@ def move(event, can, rect):
     can.move(rect, event.x - x1, event.y - y1)
 
 def deposer(x,y,can , rect):
+    
     x1, y1, x2, y2= can.coords(rect)
     coord_last = can.coords(rect)
     move = False
@@ -64,6 +69,8 @@ def deposer(x,y,can , rect):
             if (400 +30*i  <= x<= 400+(i+1)*30 and 160 +30*j <= y <= 160+(j+1)*30):
                 can.move(rect,400+i*30-x1,160+j*30-y1)
                 move = True
+                liste_bouge.append(rect)
+                
             
     
 
