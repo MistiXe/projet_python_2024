@@ -3,15 +3,14 @@ from tkinter import *
 from Variables import *
 
 global liste_a_bouge
-
-global laliste
 old=[None, None]
 global c 
 c= 0
 
 
 
-def créerGrille(root):
+def creerJeu(root):
+    global laliste
     platforme = Canvas(root, width=1200 , height=650)
 
     for i in range(12):
@@ -22,50 +21,49 @@ def créerGrille(root):
 
     platforme.pack()
     laliste = genererPion(platforme)
+   
     
-    for i in range(len(laliste)):
-        for j in range(len(laliste)):
-            platforme.bind("<Button-1>", lambda event:cliquePion(event, platforme, laliste[i][j]))
+    platforme.place()
+    platforme.bind("<Button-1>", lambda event:cliquePion(event, platforme, laliste))
     
     
-def cliquePion(event, cnv, recta):
+def cliquePion(event, cnv, laliste):
     global c
     c = (c+1)%2
-    if(c == 1):
-        old[0] = event.x
-        old[1] = event.y
-        cnv.bind("<Motion>", lambda event:move(event, cnv, recta))
-    else:
-        cnv.unbind("<Motion>")
+    recta  = 0
+    for l in laliste:
+        for p in l:
+            cood_p = cnv.coords(p)
+            if(cood_p[0] <= event.x <= cood_p[0] + cood_p[2] and cood_p[1] <= event.y <= cood_p[1] + cood_p[3]):
+                recta = p
+    if(recta != 0):  
+        if(c == 1):
+            old[0] = event.x
+            old[1] = event.y
+            cnv.bind("<Motion>", lambda event:move(event, cnv, recta))
+        else:
+            cnv.unbind("<Motion>")
+            deposer(event.x,event.y,cnv, recta)
         
     
     
 def move(event, can, rect):
    
-    old[0] = event.x
-    old[1] = event.y
-    x1, y1 , x2, y2 = can.coords(rect)
+    x1, y1, x2, y2 = can.coords(rect)
     move = False
-    if (old[0] >= x1 and old[0] <= x2 and old[1] >= y1 and old[1] <= y2):
-        can.move(rect, event.x-old[0], event.y-old[1])
-        old[0]=event.x
-        old[1]=event.y
+    can.move(rect, event.x - x1, event.y - y1)
 
-def deposer(x, y , can , rect):
-    x1, y1= can.coords(rect)
+def deposer(x,y,can , rect):
+    x1, y1, x2, y2= can.coords(rect)
+
+
     for i in range(12):
         for j in range(12):
-            if (12+i*50 <= x<= 12+(i+1)*50 and 12+j*50 <= y <= 12+(j+1)*50):
-                can.move(rect,12+i*50-x1,12+j*50-y1)
-                move = True 
-               
+            if (400 +30*i  <= x<= 400+(i+1)*30 and 160 +30*j <= y <= 160+(j+1)*30):
+                can.move(rect,400+i*30-x1,160+j*30-y1)
+                can.unbind("<Button-1>")
                 
     
-    
-                
-    if (move == False):
-        can.move(rect,620-x1,30-y1)
-        can.unbind("<Motion>")
     
    
     
