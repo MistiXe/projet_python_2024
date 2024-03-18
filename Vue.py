@@ -40,7 +40,7 @@ def cliquePion(event, cnv, laliste):
             cood_p = cnv.coords(p)
             if(cood_p[0] <= event.x <= cood_p[0] + cood_p[2] and cood_p[1] <= event.y <= cood_p[1] + cood_p[3]):
                 recta = p
-                x1, y1, x2, y2 = cnv.coords(recta)
+                
                
     if(recta != 0 and recta not in liste_bouge):  
         if(c == 1):
@@ -67,7 +67,7 @@ def deposer(x,y,can , rect):
 
     for i in range(12):
         for j in range(12):
-            if (400 +30*i  <= x<= 400+(i+1)*30 and 160 +30*j <= y <= 160+(j+1)*30 and collision(i,j, lagrille_theorique ) == False):
+            if (400 +30*i  <= x<= 400+(i+1)*30 and 160 +30*j <= y <= 160+(j+1)*30):
                 liste_ind = [i,j]
                 majGrille(lagrille_theorique, liste_ind)
                 
