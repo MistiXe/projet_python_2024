@@ -7,10 +7,6 @@ old=[None, None]
 global c 
 c= 0
 
-
-
-
-
 def creerJeu(root):
     global laliste
     global liste_bouge
@@ -63,18 +59,18 @@ def move(event, can, rect):
 def deposer(x,y,can , rect):
     x1, y1, x2, y2= can.coords(rect)
     move = False
-   
+    
 
     for i in range(12):
         for j in range(12):
             if (400 +30*i  <= x<= 400+(i+1)*30 and 160 +30*j <= y <= 160+(j+1)*30):
-                liste_ind = [i,j]
-                majGrille(lagrille_theorique, liste_ind)
-                
-                can.move(rect,400+i*30-x1,160+j*30-y1)
-                move = True
-                liste_bouge.append(rect)
-                print(lagrille_theorique)
+                l_i = genererIndiceduPion(i,j,1,4)
+                if(collision(l_i, lagrille_theorique) == False):
+                    print(majGrille(lagrille_theorique, l_i))
+                    can.move(rect,400+i*30-x1,160+j*30-y1)
+                    move = True
+                    liste_bouge.append(rect)
+            
  
 
    

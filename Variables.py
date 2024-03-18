@@ -21,9 +21,11 @@ def genererPion(platforme):
     g_b = platforme.create_rectangle(950,530,1070,560,fill="blue")
     h_b = platforme.create_rectangle(850,50,910,110,fill="blue")
     i_b = platforme.create_rectangle(850,140,910,230,fill="blue")
-   
+    
+
+
    
 
-    return [[a,b,c,d,e,f,g,h,i],[a_b,b_b,c_b,d_b,e_b,f_b,g_b, h_b,i_b]]
+    return [[a,b,c,d,e,f,g,h],[a_b,b_b,c_b,d_b,e_b,f_b,g_b, h_b,i_b]]
 
 
