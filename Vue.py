@@ -10,13 +10,14 @@ c= 0
 
 matrice_rouge = [1]*144
 
-
 matrice_rouge[0] = 2
 matrice_rouge[132] = 2
 
 matrice_bleu = [1]*144
 matrice_bleu[11] = 2
 matrice_bleu[143] = 2
+
+
 
 def click(event):
     global platforme
@@ -25,6 +26,7 @@ def click(event):
     global player
     global origins
     global laliste
+    global couleur_joueur
     player = 0
     
     x,y = event.x , event.y
@@ -39,12 +41,19 @@ def click(event):
         dimensions = [w, h]
         
         blocs = laliste 
+        
 
         if selected in blocs[0]:
+           
            player = 1
-
+           message = "RED"
+           
+           label_etat.config(text="Autour des : " + message)
         elif selected in blocs[1]:
+         
            player = 2
+           message = "BLUE"
+           label_etat.config(text="Autour des : " + message)
 
 
 
@@ -102,11 +111,6 @@ def deposer(event):
     
 
     matrice = []
-    if player == 1 :
-        matrice = matrice_rouge
-    
-    elif player == 2:
-        matrice = matrice_bleu
 
     
  
@@ -126,7 +130,7 @@ def deposer(event):
                            matrice[i-12] = 0
 
                        if i < 132 :
-                           matrice[i+12] = 0
+                           matrice[i+11] = 0
 
                        if i % 12 != 0  :
                            matrice[i-1] = 0
@@ -148,11 +152,7 @@ def deposer(event):
                            matrice[i+13] = 2
 
                            
-               if player == 1:
-                   matrice_rouge = matrice
-               elif player == 2:
-                   matrice_bleu = matrice 
-               selected = None
+               
                         
                
 
@@ -185,6 +185,9 @@ def creerJeu(root):
     global liste_bouge
     liste_bouge = []
     global grille
+    global label_etat
+    label_etat = Label(root,text ="Autour des : ", font=("Arial", 25) )
+
     platforme = Canvas(root, width=1600 , height=1000)
     grille = []
     for i in range(12):
@@ -196,8 +199,9 @@ def creerJeu(root):
             grille.append(platforme.coords(carré))
 
            
-
+    label_etat.pack()
     platforme.pack()
+    
     laliste = genererPion(platforme)
     
 
