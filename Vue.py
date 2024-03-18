@@ -8,6 +8,9 @@ old=[None, None]
 global c 
 c= 0
 
+
+### définition des matrices
+
 matrice_rouge = [1]*144
 matrice_rouge[0] = 2
 matrice_rouge[132] = 2
@@ -16,6 +19,8 @@ matrice_bleu = [1]*144
 matrice_bleu[11] = 2
 matrice_bleu[143] = 2
 
+
+### Gestion du clique
 def click(event):
     global platforme
     global selected
@@ -28,6 +33,7 @@ def click(event):
     x,y = event.x , event.y
 
     selecteds = platforme.find_overlapping(x,y,x,y)
+    
     if selecteds :
         selected = selecteds[0]
         cord = platforme.coords(selected)
@@ -44,14 +50,17 @@ def click(event):
         elif selected in blocs[1]:
            player = 2
 
-
+### Mouvement du pion 
 
 def move(event):
     global selected
     global dimensions
 
+
+    ### x et y sont les coordonnées du pointeur de la souris
     x,y = event.x , event.y
 
+    ### Selected = le pion, on cherche la coordonnée du pion cliqué et on le bouge
     if selected:
        platforme.coords(selected,x,y,x+dimensions[0],y+dimensions[1])
 
@@ -180,7 +189,7 @@ def rotate(event):
 
           
 
-
+### Création du jeu
 
 def creerJeu(root):
     global platforme
