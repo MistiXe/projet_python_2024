@@ -112,13 +112,13 @@ def deposer(event):
     if player == 1 :
         matrice = matrice_rouge
         message = "BLUE"
-        label_etat.config(text="Autour des : " + message)
+        label_etat.config(text="Au tour des : " + message)
 
     
     elif player == 2:
         matrice = matrice_bleu
         message = "RED"
-        label_etat.config(text="Autour des : " + message)
+        label_etat.config(text="Au tour des : " + message)
 
     
  
