@@ -262,16 +262,24 @@ def setMenu(root):
     # login button
     v_button = ttk.Button(root, text="Valider")
     v_button.grid(column=1, row=3, sticky=E, padx=5, pady=5)
+    
 
-    v_button.bind("<Button-1>", listeEvent(color1_entry.get()), color2_entry.get())
+    v_button.bind("<Button-1>", lambda event:boutton_clic(event, couleur1= color1_entry.get(), couleur2=color2_entry.get()))
 
 
     root.mainloop()
 
 
 
-def listeEvent(couleur1, couleur2):
-    print(couleur1 +couleur2)
+def boutton_clic(event, couleur1, couleur2):
+    if(couleur1 != None and couleur2 != None):
+        root =  Tk()
+        root.geometry("1210x680")
+        creerJeu(root)
+        root.mainloop()
+
+        
+
     
     
     
