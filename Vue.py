@@ -1,5 +1,6 @@
 from Controller import *
 from tkinter import *
+from tkinter import ttk
 from Variables import*
 
 
@@ -225,9 +226,56 @@ def creerJeu(root):
    
     platforme.bind("<Button1-Motion>", move)
     platforme.bind("<ButtonRelease-1>" , deposer)
-    platforme.bind("<Button-3>" , rotate) 
+    platforme.bind("<Button-3>" , rotate)
+    
+
+    ############################# Menu #################################################
+
+def setMenu(root):
+    global selected_color
+    root.columnconfigure(0, weight=1)
+    root.columnconfigure(1, weight=3)
+    liste_color = ["RED", "BLUE", "YELLOW", "CYAN"]
+
+    # username
+    username_label = ttk.Label(root, text="Player 1:")
+    username_label.grid(column=0, row=0, sticky=W, padx=5, pady=5)
 
 
+    selected_color = StringVar()
+    color1_entry = ttk.Combobox(root, textvariable=selected_color)
+    color1_entry.grid(column=1, row=0, sticky=E, padx=5, pady=5)
+    color1_entry['values'] = liste_color
+    color1_entry['state'] = 'readonly'
+    
+
+    # password
+    password_label = ttk.Label(root, text="Player 2 :")
+    password_label.grid(column=0, row=1, sticky=W, padx=5, pady=5)
+
+    selected_color_2 = StringVar()
+    color2_entry = ttk.Combobox(root, textvariable=selected_color_2)
+    color2_entry.grid(column=1, row=1, sticky=E, padx=5, pady=5)
+    color2_entry['values'] = liste_color
+    color2_entry['state'] = 'readonly'
+    
+    # login button
+    v_button = ttk.Button(root, text="Valider")
+    v_button.grid(column=1, row=3, sticky=E, padx=5, pady=5)
+
+    v_button.bind("<Button-1>", listeEvent(color1_entry.get()), color2_entry.get())
+
+
+    root.mainloop()
+
+
+
+def listeEvent(couleur1, couleur2):
+    print(couleur1 +couleur2)
+    
+    
+    
+  
 
 
 
