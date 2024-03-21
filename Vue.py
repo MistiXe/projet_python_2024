@@ -8,6 +8,9 @@ from Variables import*
 old=[None, None]
 global c 
 c= 0
+global liste_couleur_selec
+liste_couleur_selec = []
+
 
 
 ### définition des matrices
@@ -199,6 +202,7 @@ def creerJeu(root):
     liste_bouge = []
     global grille
     global label_etat
+    
     label_etat = Label(root,text ="Autour des : ", font=("Arial", 25) )
 
     platforme = Canvas(root, width=1600 , height=1000)
@@ -216,6 +220,9 @@ def creerJeu(root):
     platforme.pack()
 
     laliste = genererPion(platforme)
+
+
+    print(liste_couleur_selec)
     
 
   
@@ -234,10 +241,16 @@ def creerJeu(root):
 def setMenu(root):
     global selected_color
     root.columnconfigure(0, weight=1)
-    root.columnconfigure(1, weight=3)
+    root.columnconfigure(1, weight=4)
     liste_color = ["RED", "BLUE", "YELLOW", "CYAN"]
 
-    # username
+    d_1= Canvas(root, width=30, height=30, bg="WHITE")
+    d_1.grid(column=3, row=0, sticky=W)
+
+    d_2= Canvas(root, width=30, height=30, bg="WHITE")
+    d_2.grid(column=3, row=1, sticky=W)
+
+    
     username_label = ttk.Label(root, text="Player 1:")
     username_label.grid(column=0, row=0, sticky=W, padx=5, pady=5)
 
@@ -249,7 +262,7 @@ def setMenu(root):
     color1_entry['state'] = 'readonly'
     
 
-    # password
+    
     password_label = ttk.Label(root, text="Player 2 :")
     password_label.grid(column=0, row=1, sticky=W, padx=5, pady=5)
 
@@ -262,25 +275,47 @@ def setMenu(root):
     # login button
     v_button = ttk.Button(root, text="Valider")
     v_button.grid(column=1, row=3, sticky=E, padx=5, pady=5)
+
+    
     
 
     v_button.bind("<Button-1>", lambda event:boutton_clic(event, couleur1= color1_entry.get(), couleur2=color2_entry.get()))
-
+    color1_entry.bind('<<ComboboxSelected>>', lambda event:liste_carre(event, d_1, color1_entry.get()))
+    color2_entry.bind('<<ComboboxSelected>>', lambda event:liste_carre(event, d_2, color2_entry.get()))
 
     root.mainloop()
 
 
 
 def boutton_clic(event, couleur1, couleur2):
-    if(couleur1 != None and couleur2 != None):
+   
+   
+    if(couleur1 != "" and couleur2 != ""):
         root =  Tk()
         root.geometry("1210x680")
         creerJeu(root)
         root.mainloop()
+        liste_couleur_selec.append(couleur1)
+    else:
+        liste_couleur_selec.append(couleur1)
+        liste_couleur_selec.append(couleur2)
+      
 
+
+
+def liste_carre(event, car, couleur):
+    car.configure(bg=couleur)
+
+
+
+def mettreCouleurPion(laliste, couleur1, cnv):
+    
+    for i in range(len(laliste)):
+        for j in range(len(laliste[i])):
+            cnv.itemconfigure(laliste[i][j], fill=couleur1)
         
 
-    
+
     
     
   

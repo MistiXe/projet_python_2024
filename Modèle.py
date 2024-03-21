@@ -2,7 +2,7 @@ from Vue import *
 from tkinter import * 
 
 
-root =  Tk()
+
 root_menu =  Tk()
 root_menu.geometry("220x100")
 setMenu(root_menu)
