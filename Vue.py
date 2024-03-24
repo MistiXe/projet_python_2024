@@ -114,14 +114,14 @@ def deposer(event):
     matrice = []
     if player == 1 :
         matrice = matrice_rouge
-        message = "BLUE"
-        label_etat.config(text="Au tour des : " + message)
+        message = c2
+        label_etat.config(text="Turn of the  " + message+"S")
 
     
     elif player == 2:
         matrice = matrice_bleu
-        message = "RED"
-        label_etat.config(text="Au tour des : " + message)
+        message = c1
+        label_etat.config(text="Turn of the : " + message+"S")
 
     
  
@@ -170,14 +170,14 @@ def deposer(event):
                selected = None
                         
                
-               
+               majGrille(laliste_theorique, matrice_rouge)
               
 
             else :
                 platforme.coords(selected,origins)
                 selected = None
 
-        print(laliste_theorique)
+    print(laliste_theorique)
 
 def rotate(event):
     global selected , platforme , dimensions
@@ -203,9 +203,14 @@ def creerJeu(root, couleur1, couleur2):
     global grille
     global label_etat
     global laliste_theorique
+    global c1
+    global c2
+    
+    c1 = couleur1
+    c2= couleur2
     laliste_theorique = genererGrille()
     
-    label_etat = Label(root,text ="Au tour des : ", font=("Arial", 25) )
+    label_etat = Label(root,text ="The game begins !", font=("Arial", 25) )
 
     platforme = Canvas(root, width=1600 , height=1000, bg='gray')
     grille = []
@@ -246,7 +251,7 @@ def creerJeu(root, couleur1, couleur2):
 def setMenu(root):
     global selected_color
     root.columnconfigure(0, weight=1)
-    root.columnconfigure(1, weight=4)
+    root.columnconfigure(1, weight=5)
     liste_color = ["RED", "BLUE", "YELLOW", "CYAN"]
 
     d_1= Canvas(root, width=30, height=30, bg="WHITE")
@@ -255,6 +260,10 @@ def setMenu(root):
     d_2= Canvas(root, width=30, height=30, bg="WHITE")
     d_2.grid(column=3, row=1, sticky=W)
 
+    v= Checkbutton(root, text="Ordinateur")
+    v.grid(column=4, row=1, sticky=W)
+    v2= Checkbutton(root, text="Ordinateur")
+    v2.grid(column=4, row=0, sticky=W)
     
     username_label = ttk.Label(root, text="Player 1:")
     username_label.grid(column=0, row=0, sticky=W, padx=5, pady=5)
