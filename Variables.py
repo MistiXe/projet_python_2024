@@ -11,7 +11,7 @@ def genererPion(platforme):
     g = platforme.create_rectangle(50,530,170,560,fill="red")
     h = platforme.create_rectangle(250,50,310,110,fill="red")
     i = platforme.create_rectangle(250,140,310,260,fill="red")
-    j = platforme.create_rectangle(250,340,330,420,fill="red")
+    j = platforme.create_rectangle(250,340,340,430,fill="red")
 
     a_b = platforme.create_rectangle(950,50,980,80,fill="blue") 
     b_b = platforme.create_rectangle(950,90,1010,120,fill="blue")
@@ -22,11 +22,12 @@ def genererPion(platforme):
     g_b = platforme.create_rectangle(950,530,1070,560,fill="blue")
     h_b = platforme.create_rectangle(850,50,910,110,fill="blue")
     i_b = platforme.create_rectangle(850,140,910,230,fill="blue")
+    j_b = platforme.create_rectangle(850,340,940,430,fill="blue")
     
 
 
    
 
-    return [[a,b,c,d,e,f,g,h,i],[a_b,b_b,c_b,d_b,e_b,f_b,g_b, h_b,i_b]]
+    return [[a,b,c,d,e,f,g,h,i,j],[a_b,b_b,c_b,d_b,e_b,f_b,g_b, h_b,i_b, j_b]]
 
 

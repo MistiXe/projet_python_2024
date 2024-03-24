@@ -8,7 +8,6 @@ from Variables import*
 old=[None, None]
 global c 
 c= 0
-global liste_couleur_selec
 liste_couleur_selec = []
 
 
@@ -171,13 +170,14 @@ def deposer(event):
                selected = None
                         
                
-
+               
+              
 
             else :
                 platforme.coords(selected,origins)
                 selected = None
 
-
+        print(laliste_theorique)
 
 def rotate(event):
     global selected , platforme , dimensions
@@ -195,17 +195,19 @@ def rotate(event):
 
 ### Création du jeu
 
-def creerJeu(root):
+def creerJeu(root, couleur1, couleur2):
     global platforme
     global laliste
     global liste_bouge
     liste_bouge = []
     global grille
     global label_etat
+    global laliste_theorique
+    laliste_theorique = genererGrille()
     
-    label_etat = Label(root,text ="Autour des : ", font=("Arial", 25) )
+    label_etat = Label(root,text ="Au tour des : ", font=("Arial", 25) )
 
-    platforme = Canvas(root, width=1600 , height=1000)
+    platforme = Canvas(root, width=1600 , height=1000, bg='gray')
     grille = []
     for i in range(12):
         
@@ -222,18 +224,21 @@ def creerJeu(root):
     laliste = genererPion(platforme)
 
 
-    print(liste_couleur_selec)
+    mettreCouleurPion(laliste, couleur1,couleur2,platforme)
     
 
   
     for i in laliste:
         for j in i :
              platforme.tag_bind(j,"<Button-1>", click )
+             
 
    
     platforme.bind("<Button1-Motion>", move)
     platforme.bind("<ButtonRelease-1>" , deposer)
     platforme.bind("<Button-3>" , rotate)
+
+    
     
 
     ############################# Menu #################################################
@@ -293,26 +298,23 @@ def boutton_clic(event, couleur1, couleur2):
     if(couleur1 != "" and couleur2 != ""):
         root =  Tk()
         root.geometry("1210x680")
-        creerJeu(root)
+        creerJeu(root, couleur1, couleur2)
         root.mainloop()
-        liste_couleur_selec.append(couleur1)
-    else:
-        liste_couleur_selec.append(couleur1)
-        liste_couleur_selec.append(couleur2)
-      
-
-
+        
 
 def liste_carre(event, car, couleur):
     car.configure(bg=couleur)
 
 
 
-def mettreCouleurPion(laliste, couleur1, cnv):
+def mettreCouleurPion(laliste, couleur1, couleur2, cnv):
     
     for i in range(len(laliste)):
         for j in range(len(laliste[i])):
-            cnv.itemconfigure(laliste[i][j], fill=couleur1)
+            if(i == 0):
+                cnv.itemconfigure(laliste[i][j], fill=couleur1)
+            else:
+                cnv.itemconfigure(laliste[i][j], fill=couleur2)
         
 
 
