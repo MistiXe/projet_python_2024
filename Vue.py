@@ -9,6 +9,9 @@ old=[None, None]
 global c 
 c= 0
 liste_couleur_selec = []
+global moved
+moved = []
+
 
 
 
@@ -31,27 +34,35 @@ def click(event):
     global player
     global origins
     global laliste
+    
     player = 0
     
     x,y = event.x , event.y
 
     selecteds = platforme.find_overlapping(x,y,x,y)
-    
-    if selecteds :
-        selected = selecteds[0]
-        cord = platforme.coords(selected)
-        origins = cord
-        w = cord[2] - cord[0]
-        h = cord[3] - cord[1]
-        dimensions = [w, h]
-        
-        blocs = laliste 
 
-        if selected in blocs[0]:
-           player = 1
 
-        elif selected in blocs[1]:
-           player = 2
+
+    if(selecteds[0] not in moved):
+     
+        if selecteds:
+            selected = selecteds[0]
+            
+            cord = platforme.coords(selected)
+            origins = cord
+            w = cord[2] - cord[0]
+            h = cord[3] - cord[1]
+            dimensions = [w, h]
+                
+            blocs = laliste 
+            moved.append(selected)
+            
+
+            if selected in blocs[0]:
+                player = 1
+
+            elif selected in blocs[1]:
+                player = 2
 
 ### Mouvement du pion 
 
@@ -88,6 +99,7 @@ def verifier(x,y,player):
      
         if e[0]>= surface[0] and e[2]<= surface[2] and e[1]>=surface[1] and e[3] <= surface[3]:
             checked.append(i)
+            
             if matrice[i] == 0:
                 check1 = False
 
@@ -96,8 +108,9 @@ def verifier(x,y,player):
 
     
         i = i+1
-        
-
+    
+    if(selected in moved):
+        check1 == True
 
     return check1 and check2
 
@@ -107,28 +120,34 @@ def verifier(x,y,player):
     
 
 def deposer(event):
-    global  selected , grille , platforme , dimensions , player , checked , surface , player , matrice_bleu , matrice_rouge
+    global  selected , grille , platforme , dimensions , player , checked , surface , player , matrice_bleu , matrice_rouge, tourP, mat_pion
     x,y = event.x , event.y
     
+    
+    mat_pion = []
 
     matrice = []
-    if player == 1 :
+    if tourP%2==0 :
         matrice = matrice_rouge
         message = c2
+        mat_pion = laliste[0]
         label_etat.config(text="Turn of the  " + message+"S")
 
     
-    elif player == 2:
+    else:
         matrice = matrice_bleu
         message = c1
+        mat_pion = laliste[1]
         label_etat.config(text="Turn of the : " + message+"S")
 
     
- 
+    print(selected)
+    print(mat_pion)
     for e in grille:
         if x >= e[0] and x<= e[2] and y>=e[1] and y <= e[3]:
             check = verifier(e[0],e[1], player)
-            if check :
+
+            if check and selected in mat_pion  :
                platforme.coords(selected, e[0],e[1],e[0]+ dimensions[0] , e[1] + dimensions[1])
                for i in checked:
                    matrice_rouge[i] = 0
@@ -136,7 +155,7 @@ def deposer(event):
 
                    cord_grille = grille[i]
 
-                   if cord_grille[0] == surface[0] or  cord_grille[1] == surface[1] or cord_grille[2] == surface[2] or cord_grille[3] == surface[3] :
+                   if cord_grille[0] == surface[0] or  cord_grille[1] == surface[1] or cord_grille[2] == surface[2] or cord_grille[3] == surface[3]:
                        if i > 11 :
                            matrice[i-12] = 0
 
@@ -161,23 +180,34 @@ def deposer(event):
 
                        if cord_grille[2] == surface[2] and   cord_grille[3] == surface[3] and i % 12 != 11   and  i < 132:
                            matrice[i+13] = 2
+                      
+                      
+                 
+                   
+                   
+                   
+                
+           
 
                            
                if player == 1:
                    matrice_rouge = matrice
                elif player == 2:
                    matrice_bleu = matrice 
+               moved.append(selected)
                selected = None
                         
+               tourP = tourP +1
+               print(tourP)
+             
                
-               majGrille(laliste_theorique, matrice_rouge)
               
 
             else :
                 platforme.coords(selected,origins)
                 selected = None
 
-    print(laliste_theorique)
+    
 
 def rotate(event):
     global selected , platforme , dimensions
@@ -205,6 +235,8 @@ def creerJeu(root, couleur1, couleur2):
     global laliste_theorique
     global c1
     global c2
+    global tourP
+    tourP =  0
     
     c1 = couleur1
     c2= couleur2
@@ -235,7 +267,7 @@ def creerJeu(root, couleur1, couleur2):
   
     for i in laliste:
         for j in i :
-             platforme.tag_bind(j,"<Button-1>", click )
+            platforme.tag_bind(j,"<Button-1>", click )
              
 
    
@@ -262,8 +294,7 @@ def setMenu(root):
 
     v= Checkbutton(root, text="Ordinateur")
     v.grid(column=4, row=1, sticky=W)
-    v2= Checkbutton(root, text="Ordinateur")
-    v2.grid(column=4, row=0, sticky=W)
+ 
     
     username_label = ttk.Label(root, text="Player 1:")
     username_label.grid(column=0, row=0, sticky=W, padx=5, pady=5)
