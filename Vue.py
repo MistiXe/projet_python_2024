@@ -1,7 +1,8 @@
 from Controller import *
 from tkinter import *
-from tkinter import ttk
+from tkinter.ttk import *
 from Variables import*
+from tkinter import messagebox
 
 
 
@@ -237,12 +238,36 @@ def creerJeu(root, couleur1, couleur2):
     global c2
     global tourP
     tourP =  0
+
+    root.columnconfigure(0, weight=1)
+    root.columnconfigure(1, weight=5)
     
     c1 = couleur1
     c2= couleur2
     laliste_theorique = genererGrille()
+
+
+
+
     
     label_etat = Label(root,text ="The game begins !", font=("Arial", 25) )
+
+    style = Style()
+    style.configure('TButton', font =
+               ('calibri', 10, 'bold'),
+                    borderwidth = '4')
+ 
+
+    
+    
+
+
+
+    b_return = Button(root, text=" Menu ", command=rejouer)
+    b_return2 = Button(root, text=" Règles du jeu " ,command=regles)
+    b_return2.pack()
+    b_return.pack()
+
 
     platforme = Canvas(root, width=1600 , height=1000, bg='gray')
     grille = []
@@ -296,29 +321,29 @@ def setMenu(root):
     v.grid(column=4, row=1, sticky=W)
  
     
-    username_label = ttk.Label(root, text="Player 1:")
+    username_label = Label(root, text="Player 1:")
     username_label.grid(column=0, row=0, sticky=W, padx=5, pady=5)
 
 
     selected_color = StringVar()
-    color1_entry = ttk.Combobox(root, textvariable=selected_color)
+    color1_entry = Combobox(root, textvariable=selected_color)
     color1_entry.grid(column=1, row=0, sticky=E, padx=5, pady=5)
     color1_entry['values'] = liste_color
     color1_entry['state'] = 'readonly'
     
 
     
-    password_label = ttk.Label(root, text="Player 2 :")
+    password_label = Label(root, text="Player 2 :")
     password_label.grid(column=0, row=1, sticky=W, padx=5, pady=5)
 
     selected_color_2 = StringVar()
-    color2_entry = ttk.Combobox(root, textvariable=selected_color_2)
+    color2_entry = Combobox(root, textvariable=selected_color_2)
     color2_entry.grid(column=1, row=1, sticky=E, padx=5, pady=5)
     color2_entry['values'] = liste_color
     color2_entry['state'] = 'readonly'
     
     # login button
-    v_button = ttk.Button(root, text="Valider")
+    v_button =Button(root, text="Valider")
     v_button.grid(column=1, row=3, sticky=E, padx=5, pady=5)
 
     
@@ -335,11 +360,12 @@ def setMenu(root):
 def boutton_clic(event, couleur1, couleur2):
    
    
-    if(couleur1 != "" and couleur2 != ""):
+    if((couleur1 != "" and couleur2 != "" ) and couleur1 != couleur2):
         root =  Tk()
         root.geometry("1210x680")
         creerJeu(root, couleur1, couleur2)
         root.mainloop()
+        
         
 
 def liste_carre(event, car, couleur):
@@ -358,11 +384,16 @@ def mettreCouleurPion(laliste, couleur1, couleur2, cnv):
         
 
 
-    
-    
-  
+def rejouer():
+   quit
+   root_menu =  Tk()
+   setMenu(root_menu)
+   
+def regles():
+    message  = "- 1) Placement des pièces : Chaque joueur choisit une couleur et commence avec 21 pièces, allant de 1 à 5 blocs. Le premier joueur commence en plaçant une pièce dans son coin du plateau, et les joueurs suivants font de même. " + "\n" +  "- 2) Règle de connexion : Après le premier tour, chaque pièce que tu places doit toucher au moins une autre pièce de ta couleur, mais seulement par les coins. Les côtés ne peuvent pas se toucher." + "\n" + "- 3) Blocage : Tu peux et devrais essayer de bloquer tes adversaires en utilisant tes pièces pour les empêcher de développer leur territoire." + "\n" + "- 4) Fin de jeu et score : Le jeu se termine lorsque aucun joueur ne peut plus poser de pièce sur le plateau. Le score est calculé en soustrayant le nombre de carrés dans les pièces non placées de chaque joueur de son total. Un bonus est accordé si toutes les pièces sont placées, surtout si la plus petite pièce (le monomino) est placée en dernier."
 
 
+    messagebox.showinfo("Règles du jeu", message)
 
 
 
