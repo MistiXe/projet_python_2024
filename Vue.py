@@ -52,7 +52,7 @@ def click(event):
     selecteds = platforme.find_overlapping(x,y,x,y)
 
 
-
+    
     if(selecteds[0] not in moved):
      
         if selecteds:
@@ -65,7 +65,7 @@ def click(event):
             dimensions = [w, h]
                 
             blocs = laliste 
-            moved.append(selected)
+            
             
 
             if selected in blocs[0]:
@@ -119,13 +119,16 @@ def verifier(x,y,player):
     
         i = i+1
     
-    if(selected in moved):
-        check1 == True
-
+    
     return check1 and check2
 
 
-
+def depasser(L):
+   
+   if(L[2] <= 760 and L[3] <= 520):
+       return True
+   else:
+       return False
 
     
 
@@ -152,8 +155,9 @@ def deposer(event):
 
     
     
-    print(mat_pion)
+ 
     for e in grille:
+        
         if x >= e[0] and x<= e[2] and y>=e[1] and y <= e[3]:
             check = verifier(e[0],e[1], player)
 
@@ -164,34 +168,39 @@ def deposer(event):
                    matrice_bleu[i] = 0
 
                    cord_grille = grille[i]
+                  
 
-                   if cord_grille[0] == surface[0] or  cord_grille[1] == surface[1] or cord_grille[2] == surface[2] or cord_grille[3] == surface[3]:
-                       if i > 11 :
-                           matrice[i-12] = 0
-
-                       if i < 132 :
-                           matrice[i+12] = 0
-
-                       if i % 12 != 0  :
-                           matrice[i-1] = 0
-
-                       if i% 12 != 11 :
-                           matrice[i+1] = 0
-
+                   if (cord_grille[0] == surface[0] or  cord_grille[1] == surface[1] or cord_grille[2] == surface[2] or cord_grille[3] == surface[3]) and depasser(surface) == True :
                         
-                       if cord_grille[0] == surface[0] and   cord_grille[1] == surface[1] and i % 12 != 0  and i > 11:
-                           matrice[i-13] = 2
-
-                       if cord_grille[2] == surface[2] and   cord_grille[1] == surface[1] and i % 12 != 11 and i > 11 :
-                           matrice[i-11] = 2
-
-                       if cord_grille[0] == surface[0] and   cord_grille[3] == surface[3] and i % 12 != 0  and  i < 132:
-                           matrice[i+11] = 2
-
-                       if cord_grille[2] == surface[2] and   cord_grille[3] == surface[3] and i % 12 != 11   and  i < 132:
-                           matrice[i+13] = 2
                       
-                      
+                            if i > 11 :
+                                matrice[i-12] = 0
+
+                            if i < 132 :
+                                matrice[i+12] = 0
+
+                            if i % 12 != 0  :
+                                matrice[i-1] = 0
+
+                            if i% 12 != 11 :
+                                matrice[i+1] = 0
+
+                                
+                            if cord_grille[0] == surface[0] and   cord_grille[1] == surface[1] and i % 12 != 0  and i > 11:
+                                matrice[i-13] = 2
+
+                            if cord_grille[2] == surface[2] and   cord_grille[1] == surface[1] and i % 12 != 11 and i > 11 :
+                                matrice[i-11] = 2
+
+                            if cord_grille[0] == surface[0] and   cord_grille[3] == surface[3] and i % 12 != 0  and  i < 132:
+                                matrice[i+11] = 2
+
+                            if cord_grille[2] == surface[2] and   cord_grille[3] == surface[3] and i % 12 != 11   and  i < 132:
+                                matrice[i+13] = 2
+                   else :
+                        platforme.coords(selected,origins)
+                        selected = None      
+                        
                  
                    
                    
@@ -205,11 +214,14 @@ def deposer(event):
                elif player == 2:
                    matrice_bleu = matrice 
                moved.append(selected)
+              
                selected = None
                         
                tourP = tourP +1
-               print(tourP)
+               
                play_song()
+               
+               
              
                
               
@@ -218,7 +230,7 @@ def deposer(event):
                 platforme.coords(selected,origins)
                 selected = None
 
-    
+       
 
 def rotate(event):
     global selected , platforme , dimensions
@@ -269,8 +281,7 @@ def creerJeu(root, couleur1, couleur2):
     command=root.destroy, font=50)
     
  
-    
-    img = PhotoImage(master=root,file="block.png", height= 5, width=5)
+
     
     
 
@@ -281,7 +292,7 @@ def creerJeu(root, couleur1, couleur2):
  
 
     platforme = Canvas(root, width=1600 , height=1000)
-    platforme.create_image((50,50),image= img)
+   
     
     
     
@@ -297,6 +308,7 @@ def creerJeu(root, couleur1, couleur2):
 
            
     label_etat.pack()
+
     platforme.pack()
 
     laliste = genererPion(platforme)
@@ -315,6 +327,11 @@ def creerJeu(root, couleur1, couleur2):
     platforme.bind("<Button1-Motion>", move)
     platforme.bind("<ButtonRelease-1>" , deposer)
     platforme.bind("<Button-3>" , rotate)
+
+
+
+
+   
    
     
     
