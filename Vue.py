@@ -18,6 +18,10 @@ global moved
 moved = []
 global l_root
 l_root = []
+global score1
+global score2
+score1 = 0
+score2 = 0
 
 mixer.init()
 mixer.music.load("MVC/troll.wav")
@@ -133,9 +137,10 @@ def depasser(L):
     
 
 def deposer(event):
-    global  selected , grille , platforme , dimensions , player , checked , surface , player , matrice_bleu , matrice_rouge, tourP, mat_pion
+    global  selected , grille , platforme , dimensions , player , checked , surface , player , matrice_bleu , matrice_rouge, tourP, mat_pion, score_inter, score1, score2
     x,y = event.x , event.y
     
+    score_inter = 0
     
     mat_pion = []
 
@@ -144,6 +149,9 @@ def deposer(event):
         matrice = matrice_rouge
         message = c2
         mat_pion = laliste[0]
+        
+        
+
         label_etat.config(text="Turn of the  " + message+"S")
 
     
@@ -152,6 +160,7 @@ def deposer(event):
         message = c1
         mat_pion = laliste[1]
         label_etat.config(text="Turn of the : " + message+"S")
+       
 
     
     
@@ -168,6 +177,7 @@ def deposer(event):
                    matrice_bleu[i] = 0
 
                    cord_grille = grille[i]
+                   
                   
 
                    if (cord_grille[0] == surface[0] or  cord_grille[1] == surface[1] or cord_grille[2] == surface[2] or cord_grille[3] == surface[3]) and depasser(surface) == True :
@@ -208,12 +218,21 @@ def deposer(event):
                 
            
 
-                           
+               score_inter+=len(checked) 
+               
+               if(matrice == matrice_rouge):
+                   score1 = score1 + score_inter
+                   label_s1.config(text="Score : " + str(score1)) 
+               else:
+                   score2 = score2 + score_inter
+                   label_s2.config(text="Score : " + str(score2)) 
+                         
                if player == 1:
                    matrice_rouge = matrice
                elif player == 2:
                    matrice_bleu = matrice 
                moved.append(selected)
+               print(score_inter)
               
                selected = None
                         
@@ -255,10 +274,14 @@ def creerJeu(root, couleur1, couleur2):
     liste_bouge = []
     global grille
     global label_etat
+    global label_s1
+    global label_s2
     global laliste_theorique
     global c1
     global c2
     global tourP
+    global score1
+    global score2
     tourP =  0
 
     root.columnconfigure(0, weight=1)
@@ -280,13 +303,16 @@ def creerJeu(root, couleur1, couleur2):
     label='Exit',
     command=root.destroy, font=50)
     
+    
  
-
+    message1_s = "Score : " + str(score1)
+    message2_s = "Score : " + str(score2)
     
     
 
 
-    
+    label_s1 = Label(root,text =message1_s, font=("Arial", 25),background=couleur1,foreground='white',  )
+    label_s2 = Label(root,text =message2_s, font=("Arial", 25), background=couleur2,foreground='white' )
     label_etat = Label(root,text ="The game begins !", font=("Arial", 25) )
    
  
@@ -307,7 +333,9 @@ def creerJeu(root, couleur1, couleur2):
             grille.append(platforme.coords(carré))
 
            
-    label_etat.pack()
+    label_etat.pack(side=TOP, expand=True)
+    label_s1.pack(side=BOTTOM, expand=True)
+    label_s2.pack(side=BOTTOM, expand=True)
 
     platforme.pack()
 
@@ -401,7 +429,7 @@ def boutton_clic(event, couleur1, couleur2):
    
     if((couleur1 != "" and couleur2 != "" ) and couleur1 != couleur2):
         root =  Tk()
-        root.geometry("1210x680")
+        root.geometry("1210x780")
         creerJeu(root, couleur1, couleur2)
         l_root.append(root)
         root.mainloop()
