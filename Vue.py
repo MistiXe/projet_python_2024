@@ -270,19 +270,19 @@ def creerJeu(root, couleur1, couleur2):
     
  
     
-    img = PhotoImage(master=root,file="block.png")
+    img = PhotoImage(master=root,file="bg.jpg", height= 5, width=5)
     
     
 
 
     
     label_etat = Label(root,text ="The game begins !", font=("Arial", 25) )
-
+   
  
 
-    platforme = Canvas(root, width=1600 , height=1000, bg='gray')
-    a = Label(root, image=img)
-    a.pack()
+    platforme = Canvas(root, width=1600 , height=1000, bg=img)
+    platforme.bg
+    
 
     grille = []
     for i in range(12):
