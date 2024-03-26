@@ -4,6 +4,11 @@ from tkinter.ttk import *
 from Variables import*
 from tkinter import messagebox
 from pygame import *
+import os
+import time
+import sys
+
+
 
 
 
@@ -20,6 +25,7 @@ global l_root
 l_root = []
 global score1
 global score2
+
 score1 = 0
 score2 = 0
 
@@ -291,17 +297,23 @@ def creerJeu(root, couleur1, couleur2):
     c2= couleur2
     laliste_theorique = genererGrille()
     menubar = Menu(root,relief=FLAT,bd=10)
+
+
+
+
+
+
+   # r_button =Button(root, text="Menu", command=lambda :rejouer(root))
     
     
     #### Menu barre
     
     menubar.add_command(label='Règles du jeu', command=regles, font = ("Mono","50"))
     menubar.add_command(label='Version', command=version, font = ("Mono","50"))
+    menubar.add_command(label='Rejouer', command=lambda: rejouer(root) , font = ("Mono","50"))
     root.config(menu=menubar)
 
-    menubar.add_command(
-    label='Exit',
-    command=root.destroy, font=50)
+    
     
     
  
@@ -311,7 +323,7 @@ def creerJeu(root, couleur1, couleur2):
     
 
 
-    label_s1 = Label(root,text =message1_s, font=("Arial", 25),background=couleur1,foreground='white',  )
+    label_s1 = Label(root,text =message1_s, font=("Arial", 25),background=couleur1,foreground='white'  )
     label_s2 = Label(root,text =message2_s, font=("Arial", 25), background=couleur2,foreground='white' )
     label_etat = Label(root,text ="The game begins !", font=("Arial", 25) )
    
@@ -321,7 +333,7 @@ def creerJeu(root, couleur1, couleur2):
    
     
     
-    
+   
 
     grille = []
     for i in range(12):
@@ -355,6 +367,7 @@ def creerJeu(root, couleur1, couleur2):
     platforme.bind("<Button1-Motion>", move)
     platforme.bind("<ButtonRelease-1>" , deposer)
     platforme.bind("<Button-3>" , rotate)
+    
 
 
 
@@ -425,14 +438,17 @@ def setMenu(root):
 
 
 def boutton_clic(event, couleur1, couleur2):
+    
    
    
     if((couleur1 != "" and couleur2 != "" ) and couleur1 != couleur2):
         root =  Tk()
         root.geometry("1210x780")
         creerJeu(root, couleur1, couleur2)
-        l_root.append(root)
         root.mainloop()
+        
+
+
         
         
 
@@ -452,8 +468,17 @@ def mettreCouleurPion(laliste, couleur1, couleur2, cnv):
         
 
 
-def rejouer(event, root):
+def rejouer(root):
+    print("haya")
     root.destroy()
+    time.sleep(1)
+    os.execl(sys.executable, sys.executable,*sys.argv )
+
+  
+
+
+
+
        
     
       
