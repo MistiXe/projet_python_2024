@@ -270,7 +270,7 @@ def creerJeu(root, couleur1, couleur2):
     
  
     
-    img = PhotoImage(master=root,file="bg.jpg", height= 5, width=5)
+    img = PhotoImage(master=root,file="block.png", height= 5, width=5)
     
     
 
@@ -280,8 +280,10 @@ def creerJeu(root, couleur1, couleur2):
    
  
 
-    platforme = Canvas(root, width=1600 , height=1000, bg=img)
-    platforme.bg
+    platforme = Canvas(root, width=1600 , height=1000)
+    platforme.create_image((50,50),image= img)
+    
+    
     
 
     grille = []
@@ -329,7 +331,7 @@ def setMenu(root):
     global selected_color
     root.columnconfigure(0, weight=1)
     root.columnconfigure(1, weight=5)
-    liste_color = ["RED", "BLUE", "YELLOW", "CYAN"]
+    liste_color = ["RED", "BLUE", "YELLOW", "CYAN", "IVORY", "GREEN"]
 
     d_1= Canvas(root, width=30, height=30, bg="WHITE")
     d_1.grid(column=3, row=0, sticky=W)
