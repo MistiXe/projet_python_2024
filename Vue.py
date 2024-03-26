@@ -7,12 +7,17 @@ from pygame import *
 
 
 
+
+
+
 old=[None, None]
 global c 
 c= 0
 liste_couleur_selec = []
 global moved
 moved = []
+global l_root
+l_root = []
 
 mixer.init()
 mixer.music.load("MVC/troll.wav")
@@ -146,7 +151,7 @@ def deposer(event):
         label_etat.config(text="Turn of the : " + message+"S")
 
     
-    print(selected)
+    
     print(mat_pion)
     for e in grille:
         if x >= e[0] and x<= e[2] and y>=e[1] and y <= e[3]:
@@ -250,31 +255,35 @@ def creerJeu(root, couleur1, couleur2):
     c1 = couleur1
     c2= couleur2
     laliste_theorique = genererGrille()
+    menubar = Menu(root,relief=FLAT,bd=10)
+    
+    
+    #### Menu barre
+    
+    menubar.add_command(label='Règles du jeu', command=regles, font = ("Mono","50"))
+    menubar.add_command(label='Version', command=version, font = ("Mono","50"))
+    root.config(menu=menubar)
 
-
+    menubar.add_command(
+    label='Exit',
+    command=root.destroy, font=50)
+    
+ 
+    
+    img = PhotoImage(master=root,file="block.png")
+    
+    
 
 
     
     label_etat = Label(root,text ="The game begins !", font=("Arial", 25) )
 
-    style = Style()
-    style.configure('TButton', font =
-               ('calibri', 10, 'bold'),
-                    borderwidth = '4')
  
 
-    
-    
-
-
-
-    b_return = Button(root, text=" Menu ", command=rejouer)
-    b_return2 = Button(root, text=" Règles du jeu " ,command=regles)
-    b_return2.pack()
-    b_return.pack()
-
-
     platforme = Canvas(root, width=1600 , height=1000, bg='gray')
+    a = Label(root, image=img)
+    a.pack()
+
     grille = []
     for i in range(12):
         
@@ -304,7 +313,7 @@ def creerJeu(root, couleur1, couleur2):
     platforme.bind("<Button1-Motion>", move)
     platforme.bind("<ButtonRelease-1>" , deposer)
     platforme.bind("<Button-3>" , rotate)
-
+   
     
     
 
@@ -375,6 +384,7 @@ def boutton_clic(event, couleur1, couleur2):
         root =  Tk()
         root.geometry("1210x680")
         creerJeu(root, couleur1, couleur2)
+        l_root.append(root)
         root.mainloop()
         
         
@@ -395,10 +405,18 @@ def mettreCouleurPion(laliste, couleur1, couleur2, cnv):
         
 
 
-def rejouer():
-   quit
-   root_menu =  Tk()
-   setMenu(root_menu)
+def rejouer(event, root):
+    root.destroy()
+       
+    
+      
+
+
+      
+  
+        
+  
+ 
    
 def regles():
     message  = "- 1) Placement des pièces : Chaque joueur choisit une couleur et commence avec 21 pièces, allant de 1 à 5 blocs. Le premier joueur commence en plaçant une pièce dans son coin du plateau, et les joueurs suivants font de même. " + "\n" +  "- 2) Règle de connexion : Après le premier tour, chaque pièce que tu places doit toucher au moins une autre pièce de ta couleur, mais seulement par les coins. Les côtés ne peuvent pas se toucher." + "\n" + "- 3) Blocage : Tu peux et devrais essayer de bloquer tes adversaires en utilisant tes pièces pour les empêcher de développer leur territoire." + "\n" + "- 4) Fin de jeu et score : Le jeu se termine lorsque aucun joueur ne peut plus poser de pièce sur le plateau. Le score est calculé en soustrayant le nombre de carrés dans les pièces non placées de chaque joueur de son total. Un bonus est accordé si toutes les pièces sont placées, surtout si la plus petite pièce (le monomino) est placée en dernier."
@@ -409,6 +427,10 @@ def regles():
 def play_song():
    mixer.music.set_volume(1)
    mixer.music.play()
+
+def version():
+    message  = " Version 1.0"
+    messagebox.showinfo("Version du jeu", message)
 
 
 
