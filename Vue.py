@@ -7,6 +7,7 @@ from pygame import *
 import os
 import time
 import sys
+from timeit import default_timer
 
 
 
@@ -26,6 +27,7 @@ l_root = []
 global score1
 global score2
 global secondes
+
 
 
 secondes = 500
@@ -245,6 +247,7 @@ def deposer(event):
                selected = None
                         
                tourP = tourP +1
+               print(matrice_bleu)
                
                
                
@@ -313,18 +316,18 @@ def creerJeu(root, couleur1, couleur2):
     menubar.add_command(label='Règles du jeu', command=regles, font = ("Mono","50"))
     menubar.add_command(label='Version', command=version, font = ("Mono","50"))
     menubar.add_command(label='Rejouer', command=lambda: rejouer(root) , font = ("Mono","50"))
+    menubar.add_command(label='Quitter le jeu', command=lambda: quitter(root) , font = ("Mono","50"))
     root.config(menu=menubar)
     
  
     message1_s = "Score : " + str(score1)
     message2_s = "Score : " + str(score2)
+ 
+    second= 400
+ 
 
-    minute=StringVar()
-    second=StringVar()
-    
 
-    minute.set("00")
-    second.set("00")
+   
 
   
  
@@ -338,13 +341,14 @@ def creerJeu(root, couleur1, couleur2):
     label_s2 = Label(root,text =message2_s, font=("Arial", 15), background=couleur2,foreground='white' )
     
     label_etat = Label(root,text ="The game begins !", font=("Arial", 10) )
-    label__chrono = Label(root,text ="Chrono :  00 : 00" ,font=("Arial", 10) )
    
  
 
     platforme = Canvas(root, width=1600 , height=1000, background="GRAY")
    
-    
+    text_clock = platforme.create_text(525, 20, text= str(second), font= ("Arial", 30))
+ 
+    updateTime(second)
     
    
 
@@ -361,12 +365,14 @@ def creerJeu(root, couleur1, couleur2):
     label_etat.pack(side=TOP, expand=True)
     label_s1.pack(side=LEFT, expand=True)
     label_s2.pack(side=RIGHT, expand=True)
-    label__chrono.pack(side=BOTTOM, expand=True)
+
     
 
     platforme.pack()
 
     laliste = genererPion(platforme)
+
+    
 
 
     mettreCouleurPion(laliste, couleur1,couleur2,platforme)
@@ -492,6 +498,8 @@ def rejouer(root):
     time.sleep(1)
     os.execl(sys.executable, sys.executable,*sys.argv )
 
+def quitter(root):
+    root.quit()
   
    
 def regles():
@@ -511,7 +519,14 @@ def version():
     messagebox.showinfo("Version du jeu", message)
 
 
+def updateTime(secondes):
+    while(secondes >= 0):
+         lambda:time.sleep(1) 
+         secondes-=1
+         print(secondes)
 
+
+    return 0
   
         
 

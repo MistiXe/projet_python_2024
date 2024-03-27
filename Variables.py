@@ -13,16 +13,16 @@ def genererPion(platforme):
     i = platforme.create_rectangle(250,140,310,260,fill="red")
     j = platforme.create_rectangle(250,300,340,390,fill="red")
 
-    a_b = platforme.create_rectangle(950,50,980,80,fill="blue") 
-    b_b = platforme.create_rectangle(950,90,1010,120,fill="blue")
-    c_b = platforme.create_rectangle(950,130,1040,160,fill="blue")
-    d_b= platforme.create_rectangle(950,170,980,230,fill="blue")
-    e_b = platforme.create_rectangle(950,250,980,340,fill="blue")
-    f_b = platforme.create_rectangle(950,370,980,490,fill="blue")
-    g_b = platforme.create_rectangle(950,500,1070,530,fill="blue")
-    h_b = platforme.create_rectangle(850,50,910,110,fill="blue")
-    i_b = platforme.create_rectangle(850,140,910,230,fill="blue")
-    j_b = platforme.create_rectangle(850,300,940,390,fill="blue")
+    a_b = platforme.create_rectangle(900,50,930,80,fill="blue") 
+    b_b = platforme.create_rectangle(900,90,960,120,fill="blue")
+    c_b = platforme.create_rectangle(900,130,990,160,fill="blue")
+    d_b= platforme.create_rectangle(900,170,930,230,fill="blue")
+    e_b = platforme.create_rectangle(900,250,930,340,fill="blue")
+    f_b = platforme.create_rectangle(900,370,930,490,fill="blue")
+    g_b = platforme.create_rectangle(900,500,1020,530,fill="blue")
+    h_b = platforme.create_rectangle(800,50,860,110,fill="blue")
+    i_b = platforme.create_rectangle(800,140,860,230,fill="blue")
+    j_b = platforme.create_rectangle(800,300,890,390,fill="blue")
     
 
 
