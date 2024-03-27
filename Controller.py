@@ -3,6 +3,7 @@ tab_grille= []
 LEN_JEU = 12
 
 from random import *
+import time
 
 def genererGrille():
     for i in range(LEN_JEU):
@@ -39,7 +40,13 @@ def transGrille(matrice):
 
 
 
-            
+def Timer(duree, text_timer):
+    while duree >= 0:
+        
+        text_timer['text'] = str(duree)
+        duree -= 1
+        print(duree)
+
 
 
 

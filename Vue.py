@@ -25,12 +25,14 @@ global l_root
 l_root = []
 global score1
 global score2
+global secondes
 
+
+secondes = 500
 score1 = 0
 score2 = 0
 
 mixer.init()
-mixer.music.load("MVC/troll.wav")
 
 
 
@@ -244,7 +246,7 @@ def deposer(event):
                         
                tourP = tourP +1
                
-               play_song()
+               
                
                
              
@@ -298,12 +300,12 @@ def creerJeu(root, couleur1, couleur2):
     laliste_theorique = genererGrille()
     menubar = Menu(root,relief=FLAT,bd=10)
 
+    
 
-
-
-
-
-   # r_button =Button(root, text="Menu", command=lambda :rejouer(root))
+    mixer.music.unload()
+    mixer.music.load("MVC/Songs/mario.wav")
+    play_song_menu()
+    
     
     
     #### Menu barre
@@ -312,24 +314,35 @@ def creerJeu(root, couleur1, couleur2):
     menubar.add_command(label='Version', command=version, font = ("Mono","50"))
     menubar.add_command(label='Rejouer', command=lambda: rejouer(root) , font = ("Mono","50"))
     root.config(menu=menubar)
-
-    
-    
     
  
     message1_s = "Score : " + str(score1)
     message2_s = "Score : " + str(score2)
+
+    minute=StringVar()
+    second=StringVar()
+    
+
+    minute.set("00")
+    second.set("00")
+
+  
+ 
+
+
     
     
 
 
-    label_s1 = Label(root,text =message1_s, font=("Arial", 25),background=couleur1,foreground='white'  )
-    label_s2 = Label(root,text =message2_s, font=("Arial", 25), background=couleur2,foreground='white' )
-    label_etat = Label(root,text ="The game begins !", font=("Arial", 25) )
+    label_s1 = Label(root,text =message1_s, font=("Arial",15),background=couleur1,foreground='white'  )
+    label_s2 = Label(root,text =message2_s, font=("Arial", 15), background=couleur2,foreground='white' )
+    
+    label_etat = Label(root,text ="The game begins !", font=("Arial", 10) )
+    label__chrono = Label(root,text ="Chrono :  00 : 00" ,font=("Arial", 10) )
    
  
 
-    platforme = Canvas(root, width=1600 , height=1000)
+    platforme = Canvas(root, width=1600 , height=1000, background="GRAY")
    
     
     
@@ -346,8 +359,10 @@ def creerJeu(root, couleur1, couleur2):
 
            
     label_etat.pack(side=TOP, expand=True)
-    label_s1.pack(side=BOTTOM, expand=True)
-    label_s2.pack(side=BOTTOM, expand=True)
+    label_s1.pack(side=LEFT, expand=True)
+    label_s2.pack(side=RIGHT, expand=True)
+    label__chrono.pack(side=BOTTOM, expand=True)
+    
 
     platforme.pack()
 
@@ -368,7 +383,7 @@ def creerJeu(root, couleur1, couleur2):
     platforme.bind("<ButtonRelease-1>" , deposer)
     platforme.bind("<Button-3>" , rotate)
     
-
+    
 
 
 
@@ -381,7 +396,8 @@ def creerJeu(root, couleur1, couleur2):
 
 def setMenu(root):
 
-    mixer.init()
+    mixer.music.load('MVC/Songs/dofus_menu.wav')
+    play_song_menu()
 
 
 
@@ -389,7 +405,7 @@ def setMenu(root):
     global selected_color
     root.columnconfigure(0, weight=1)
     root.columnconfigure(1, weight=5)
-    liste_color = ["RED", "BLUE", "YELLOW", "CYAN", "IVORY", "GREEN"]
+    liste_color = ["RED", "BLUE", "YELLOW", "CYAN", "IVORY", "GREEN", "BLACK"]
 
     d_1= Canvas(root, width=30, height=30, bg="WHITE")
     d_1.grid(column=3, row=0, sticky=W)
@@ -429,7 +445,7 @@ def setMenu(root):
     
     
 
-    v_button.bind("<Button-1>", lambda event:boutton_clic(event, couleur1= color1_entry.get(), couleur2=color2_entry.get()))
+    v_button.bind("<Button-1>", lambda event:boutton_clic(event, root,couleur1= color1_entry.get(), couleur2=color2_entry.get()))
     color1_entry.bind('<<ComboboxSelected>>', lambda event:liste_carre(event, d_1, color1_entry.get()))
     color2_entry.bind('<<ComboboxSelected>>', lambda event:liste_carre(event, d_2, color2_entry.get()))
 
@@ -437,15 +453,17 @@ def setMenu(root):
 
 
 
-def boutton_clic(event, couleur1, couleur2):
+def boutton_clic(event, root_m_, couleur1, couleur2):
     
    
    
     if((couleur1 != "" and couleur2 != "" ) and couleur1 != couleur2):
         root =  Tk()
-        root.geometry("1210x780")
+        root.geometry("1210x580")
         creerJeu(root, couleur1, couleur2)
         root.mainloop()
+        
+       
         
 
 
@@ -475,20 +493,6 @@ def rejouer(root):
     os.execl(sys.executable, sys.executable,*sys.argv )
 
   
-
-
-
-
-       
-    
-      
-
-
-      
-  
-        
-  
- 
    
 def regles():
     message  = "- 1) Placement des pièces : Chaque joueur choisit une couleur et commence avec 21 pièces, allant de 1 à 5 blocs. Le premier joueur commence en plaçant une pièce dans son coin du plateau, et les joueurs suivants font de même. " + "\n" +  "- 2) Règle de connexion : Après le premier tour, chaque pièce que tu places doit toucher au moins une autre pièce de ta couleur, mais seulement par les coins. Les côtés ne peuvent pas se toucher." + "\n" + "- 3) Blocage : Tu peux et devrais essayer de bloquer tes adversaires en utilisant tes pièces pour les empêcher de développer leur territoire." + "\n" + "- 4) Fin de jeu et score : Le jeu se termine lorsque aucun joueur ne peut plus poser de pièce sur le plateau. Le score est calculé en soustrayant le nombre de carrés dans les pièces non placées de chaque joueur de son total. Un bonus est accordé si toutes les pièces sont placées, surtout si la plus petite pièce (le monomino) est placée en dernier."
@@ -496,9 +500,11 @@ def regles():
 
     messagebox.showinfo("Règles du jeu", message)
 
-def play_song():
+def play_song_menu():
    mixer.music.set_volume(1)
-   mixer.music.play()
+   mixer.music.play(-1)
+
+
 
 def version():
     message  = " Version 1.0"

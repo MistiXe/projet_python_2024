@@ -3,6 +3,7 @@ from tkinter import *
 
 
 
+
 root_menu =  Tk()
 root_menu.geometry("310x100")
 root_menu.title("Menu Blockus")
