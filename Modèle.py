@@ -4,6 +4,8 @@ from tkinter import *
 
 
 
+### Initialisation du root, taille du root, titre, on initialise le menu
+
 root_menu =  Tk()
 root_menu.geometry("310x100")
 root_menu.title("Menu Blockus")

@@ -4,17 +4,9 @@ from tkinter.ttk import *
 from Variables import*
 from tkinter import messagebox
 from pygame import *
-import os
-import time
-import sys
 from timeit import default_timer
 
-
-
-
-
-
-
+### Décalration des variables
 
 old=[None, None]
 global c 
@@ -63,10 +55,12 @@ def click(event):
     
     x,y = event.x , event.y
 
+
+    ### On sélectionne des coordonnées du canvas
     selecteds = platforme.find_overlapping(x,y,x,y)
 
 
-    
+    ### On vérifie si ce qu'on sélectionne n'est pas déjà mis dans grille
     if(selecteds[0] not in moved):
      
         if selecteds:
@@ -136,7 +130,7 @@ def verifier(x,y,player):
     
     return check1 and check2
 
-
+### On vérifie si la pièce ne dépasse pas la grille
 def depasser(L):
    
    if(L[2] <= 760 and L[3] <= 520):
@@ -155,6 +149,8 @@ def deposer(event):
     mat_pion = []
 
     matrice = []
+
+    ### On vérifie si c'est un tour pair ou impair
     if tourP%2==0 :
         matrice = matrice_rouge
         message = c2
@@ -188,7 +184,7 @@ def deposer(event):
 
                    cord_grille = grille[i]
                    
-                  
+                  ### Cobnditions de coins de chaque pions , on met 2 s'il y a un coin de disponible
 
                    if (cord_grille[0] == surface[0] or  cord_grille[1] == surface[1] or cord_grille[2] == surface[2] or cord_grille[3] == surface[3]) and depasser(surface) == True :
                         
@@ -229,7 +225,7 @@ def deposer(event):
                    
                 
            
-
+                ### Gestion du score
                score_inter+=len(checked) 
                
                if(matrice == matrice_rouge):
@@ -259,7 +255,7 @@ def deposer(event):
         selected = None
 
        
-
+### Rotation d'un pion
 def rotate(event):
     global selected , platforme , dimensions
     x,y = event.x , event.y
@@ -298,7 +294,7 @@ def creerJeu(root, couleur1, couleur2):
     
     c1 = couleur1
     c2= couleur2
-    laliste_theorique = genererGrille()
+   
     menubar = Menu(root,relief=FLAT,bd=10)
 
     
@@ -369,6 +365,8 @@ def creerJeu(root, couleur1, couleur2):
             platforme.tag_bind(j,"<Button-1>", click )
              
 
+
+    ### Gestion des évenements
    
     platforme.bind("<Button1-Motion>", move)
     platforme.bind("<ButtonRelease-1>" , deposer)
@@ -429,7 +427,7 @@ def setMenu(root):
     color2_entry['values'] = liste_color
     color2_entry['state'] = 'readonly'
     
-    # login button
+    # Valider 
     v_button =Button(root, text="Valider")
     v_button.grid(column=1, row=3, sticky=E, padx=5, pady=5)
 
@@ -443,6 +441,8 @@ def setMenu(root):
     root.mainloop()
 
 
+
+### Méthode pour valider la saisie de l'utilisateur
 
 def boutton_clic(event, root_m_, couleur1, couleur2):
     
@@ -460,12 +460,12 @@ def boutton_clic(event, root_m_, couleur1, couleur2):
 
         
         
-
+### Configuartion des pions selon la couleur sélectionné
 def liste_carre(event, car, couleur):
     car.configure(bg=couleur)
 
 
-
+### Personalisation des pions
 def mettreCouleurPion(laliste, couleur1, couleur2, cnv):
     
     for i in range(len(laliste)):
@@ -477,15 +477,14 @@ def mettreCouleurPion(laliste, couleur1, couleur2, cnv):
         
 
 
-def rejouer(root):
-    print("haya")
-    root.destroy()
-    time.sleep(1)
-    os.execl(sys.executable, sys.executable,*sys.argv )
 
+
+### Méthode quitter
 def quitter(root):
     root.quit()
   
+
+### Méthode pour afficher les règles du blockus
    
 def regles():
     message  = "- 1) Placement des pièces : Chaque joueur choisit une couleur et commence avec 21 pièces, allant de 1 à 5 blocs. Le premier joueur commence en plaçant une pièce dans son coin du plateau, et les joueurs suivants font de même. " + "\n" +  "- 2) Règle de connexion : Après le premier tour, chaque pièce que tu places doit toucher au moins une autre pièce de ta couleur, mais seulement par les coins. Les côtés ne peuvent pas se toucher." + "\n" + "- 3) Blocage : Tu peux et devrais essayer de bloquer tes adversaires en utilisant tes pièces pour les empêcher de développer leur territoire." + "\n" + "- 4) Fin de jeu et score : Le jeu se termine lorsque aucun joueur ne peut plus poser de pièce sur le plateau. Le score est calculé en soustrayant le nombre de carrés dans les pièces non placées de chaque joueur de son total. Un bonus est accordé si toutes les pièces sont placées, surtout si la plus petite pièce (le monomino) est placée en dernier."
@@ -493,25 +492,19 @@ def regles():
 
     messagebox.showinfo("Règles du jeu", message)
 
+### Méthode pour lire du son
 def play_song_menu():
    mixer.music.set_volume(1)
    mixer.music.play(-1)
 
 
-
+### Version
 def version():
     message  = " Version 1.0"
     messagebox.showinfo("Version du jeu", message)
 
 
-def updateTime(secondes):
-    while(secondes >= 0):
-         lambda:time.sleep(1) 
-         secondes-=1
-         print(secondes)
 
-
-    return 0
   
         
 
