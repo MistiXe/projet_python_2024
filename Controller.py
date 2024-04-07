@@ -40,12 +40,7 @@ def transGrille(matrice):
 
 
 
-def Timer(duree, text_timer):
-    while duree >= 0:
-        
-        text_timer['text'] = str(duree)
-        duree -= 1
-        print(duree)
+
 
 
 

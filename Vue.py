@@ -217,10 +217,12 @@ def deposer(event):
 
                             if cord_grille[2] == surface[2] and   cord_grille[3] == surface[3] and i % 12 != 11   and  i < 132:
                                 matrice[i+13] = 2
-                   else :
-                        platforme.coords(selected,origins)
-                        selected = None      
-                        
+                     
+               if player == 1:
+                   matrice_rouge = matrice
+               elif player == 2:
+                   matrice_bleu = matrice 
+               selected = None       
                  
                    
                    
@@ -244,21 +246,17 @@ def deposer(event):
                moved.append(selected)
                print(score_inter)
               
-               selected = None
+               
                         
                tourP = tourP +1
                print(matrice_bleu)
-               
-               
-               
-               
-             
+   
                
               
 
-            else :
-                platforme.coords(selected,origins)
-                selected = None
+    else :
+        platforme.coords(selected,origins)
+        selected = None
 
        
 
@@ -322,19 +320,6 @@ def creerJeu(root, couleur1, couleur2):
  
     message1_s = "Score : " + str(score1)
     message2_s = "Score : " + str(score2)
- 
-    second= 400
- 
-
-
-   
-
-  
- 
-
-
-    
-    
 
 
     label_s1 = Label(root,text =message1_s, font=("Arial",15),background=couleur1,foreground='white'  )
@@ -346,9 +331,9 @@ def creerJeu(root, couleur1, couleur2):
 
     platforme = Canvas(root, width=1600 , height=1000, background="GRAY")
    
-    text_clock = platforme.create_text(525, 20, text= str(second), font= ("Arial", 30))
+
  
-    updateTime(second)
+  
     
    
 
